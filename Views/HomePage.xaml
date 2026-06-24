@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="SubstitutivaJogoVelhaMVVM.Views.HomePage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="Início">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="18">
+            <Frame BackgroundColor="{StaticResource Primary}" Padding="22" CornerRadius="24">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Avaliação SUB" TextColor="White" FontSize="16" />
+                    <Label Text="Jogo da Velha MVVM" TextColor="White" FontSize="30" FontAttributes="Bold" />
+                    <Label Text="Shell + Rotas + Grid + SQLite" TextColor="#DCE7FF" FontSize="15" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <Frame>
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="O que este app atende" Style="{StaticResource Titulo}" FontSize="22" />
+                    <Label Text="1. Arquitetura MVVM com Models, Services, ViewModels e Views." />
+                    <Label Text="2. Navegação Shell por rotas: home, jogo e historico." />
+                    <Label Text="3. Tela do jogo usando Grid 3x3, com jogadores O e X." />
+                    <Label Text="4. Registro das partidas no SQLite." />
+                    <Label Text="5. Consulta por nome do jogador e período." />
+                </VerticalStackLayout>
+            </Frame>
+
+            <Button Text="Nova partida"
+                    Command="{Binding AbrirJogoCommand}" />
+
+            <Button Text="Consultar histórico"
+                    Style="{StaticResource BotaoSecundario}"
+                    Command="{Binding AbrirHistoricoCommand}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="SubstitutivaJogoVelhaMVVM.Views.HistoricoPage"
+    Title="Histórico de Partidas"
+    BackgroundColor="#101820">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <Label
+                Text="Histórico de Partidas"
+                FontSize="28"
+                FontAttributes="Bold"
+                TextColor="White" />
+
+            <Label
+                Text="Filtrar por jogador"
+                TextColor="White" />
+
+            <Entry
+                Placeholder="Digite o nome do jogador"
+                Text="{Binding FiltroNome}"
+                TextColor="White"
+                PlaceholderColor="#AAAAAA" />
+
+            <Button
+                Text="Buscar"
+                Command="{Binding BuscarCommand}" />
+
+            <CollectionView ItemsSource="{Binding Partidas}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame
+                            Margin="0,5"
+                            Padding="12"
+                            BackgroundColor="#1E2A38"
+                            CornerRadius="12">
+
+                            <VerticalStackLayout Spacing="4">
+                                <Label
+                                    Text="{Binding NomeJogadorO}"
+                                    TextColor="White"
+                                    FontAttributes="Bold" />
+
+                                <Label
+                                    Text="{Binding NomeJogadorX}"
+                                    TextColor="White" />
+
+                                <Label
+                                    Text="{Binding Vencedor}"
+                                    TextColor="#FFD166" />
+
+                                <Label
+                                    Text="{Binding QuantidadeJogadas}"
+                                    TextColor="#CCCCCC" />
+                            </VerticalStackLayout>
+
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

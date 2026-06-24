@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <!-- Palheta customizada para não ficar com visual padrão do .NET MAUI. -->
+    <Color x:Key="Primary">#2E3192</Color>
+    <Color x:Key="PrimaryDark">#1F225F</Color>
+    <Color x:Key="Secondary">#00A6A6</Color>
+    <Color x:Key="Accent">#F9A826</Color>
+    <Color x:Key="PageBackground">#F4F7FB</Color>
+    <Color x:Key="CardBackground">#FFFFFF</Color>
+    <Color x:Key="TextPrimary">#1E293B</Color>
+    <Color x:Key="TextSecondary">#64748B</Color>
+    <Color x:Key="Danger">#E63946</Color>
+    <Color x:Key="Success">#2A9D8F</Color>
+</ResourceDictionary>

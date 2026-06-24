@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell x:Class="SubstitutivaJogoVelhaMVVM.AppShell"
+       xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:views="clr-namespace:SubstitutivaJogoVelhaMVVM.Views"
+       Title="SUB Jogo da Velha"
+       Shell.BackgroundColor="{StaticResource Primary}"
+       Shell.ForegroundColor="White"
+       Shell.TitleColor="White"
+       Shell.TabBarBackgroundColor="{StaticResource Primary}"
+       Shell.TabBarTitleColor="White"
+       Shell.TabBarUnselectedColor="#BFD7FF">
+
+    <!-- ShellContent cria a primeira rota visível do app. -->
+    <ShellContent Title="Início"
+                  Route="home"
+                  ContentTemplate="{DataTemplate views:HomePage}" />
+</Shell>
