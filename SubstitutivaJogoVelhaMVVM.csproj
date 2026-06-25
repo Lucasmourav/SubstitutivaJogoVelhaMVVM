@@ -2,10 +2,10 @@
 
   <PropertyGroup>
     <!-- Para a prova em Windows/Visual Studio, deixei somente Android e Windows.
-         Isso evita erros de iOS/MacCatalyst como Foundation não encontrado.
-         Atualizado para .NET 9 que tem suporte completo para Android. -->
-    <TargetFrameworks>net9.0-android</TargetFrameworks>
-    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">net9.0-android;net9.0-windows10.0.19041.0</TargetFrameworks>
+         Isso evita erros de iOS/MacCatalyst como Foundation nao encontrado.
+         O projeto mira .NET 8 porque esta maquina possui SDK e workloads MAUI 8 instalados. -->
+    <TargetFrameworks>net8.0-android</TargetFrameworks>
+    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">net8.0-android;net8.0-windows10.0.19041.0</TargetFrameworks>
 
     <OutputType>Exe</OutputType>
     <RootNamespace>SubstitutivaJogoVelhaMVVM</RootNamespace>
@@ -24,6 +24,7 @@
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">24.0</SupportedOSPlatformVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
     <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
+    <AndroidManifest Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">Platforms\Android\AndroidManifest.xml</AndroidManifest>
   </PropertyGroup>
 
   <ItemGroup>
@@ -33,13 +34,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!-- MAUI Framework - necessário para aplicações .NET MAUI -->
-    <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.0" />
+    <!-- MAUI Framework - necessario para aplicacoes .NET MAUI -->
+    <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.100" />
     <!-- Logging para Debug -->
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.1" />
     <!-- sqlite-net-pcl simplifica o CRUD local usado na prova AppMinhasCompras. -->
-    <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
-    <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.10" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
+    <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.5" />
   </ItemGroup>
 
 </Project>

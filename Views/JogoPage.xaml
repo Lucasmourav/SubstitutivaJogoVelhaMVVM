@@ -34,17 +34,17 @@
                           RowSpacing="8"
                           ColumnSpacing="8">
 
-                        <Button Grid.Row="0" Grid.Column="0" Style="{StaticResource BotaoCasa}" Text="{Binding Casas[0]}" Command="{Binding JogarCommand}" CommandParameter="0" IsEnabled="{Binding TabuleiroAtivo}" />
-                        <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource BotaoCasa}" Text="{Binding Casas[1]}" Command="{Binding JogarCommand}" CommandParameter="1" IsEnabled="{Binding TabuleiroAtivo}" />
-                        <Button Grid.Row="0" Grid.Column="2" Style="{StaticResource BotaoCasa}" Text="{Binding Casas[2]}" Command="{Binding JogarCommand}" CommandParameter="2" IsEnabled="{Binding TabuleiroAtivo}" />
+                        <Button Grid.Row="0" Grid.Column="0" Style="{StaticResource BotaoCasa}" Text="{Binding Casa0}" Command="{Binding JogarCommand}" CommandParameter="0" IsEnabled="{Binding TabuleiroAtivo}" />
+                        <Button Grid.Row="0" Grid.Column="1" Style="{StaticResource BotaoCasa}" Text="{Binding Casa1}" Command="{Binding JogarCommand}" CommandParameter="1" IsEnabled="{Binding TabuleiroAtivo}" />
+                        <Button Grid.Row="0" Grid.Column="2" Style="{StaticResource BotaoCasa}" Text="{Binding Casa2}" Command="{Binding JogarCommand}" CommandParameter="2" IsEnabled="{Binding TabuleiroAtivo}" />
 
-                        <Button Grid.Row="1" Grid.Column="0" Style="{StaticResource BotaoCasa}" Text="{Binding Casas[3]}" Command="{Binding JogarCommand}" CommandParameter="3" IsEnabled="{Binding TabuleiroAtivo}" />
-                        <Button Grid.Row="1" Grid.Column="1" Style="{StaticResource BotaoCasa}" Text="{Binding Casas[4]}" Command="{Binding JogarCommand}" CommandParameter="4" IsEnabled="{Binding TabuleiroAtivo}" />
-                        <Button Grid.Row="1" Grid.Column="2" Style="{StaticResource BotaoCasa}" Text="{Binding Casas[5]}" Command="{Binding JogarCommand}" CommandParameter="5" IsEnabled="{Binding TabuleiroAtivo}" />
+                        <Button Grid.Row="1" Grid.Column="0" Style="{StaticResource BotaoCasa}" Text="{Binding Casa3}" Command="{Binding JogarCommand}" CommandParameter="3" IsEnabled="{Binding TabuleiroAtivo}" />
+                        <Button Grid.Row="1" Grid.Column="1" Style="{StaticResource BotaoCasa}" Text="{Binding Casa4}" Command="{Binding JogarCommand}" CommandParameter="4" IsEnabled="{Binding TabuleiroAtivo}" />
+                        <Button Grid.Row="1" Grid.Column="2" Style="{StaticResource BotaoCasa}" Text="{Binding Casa5}" Command="{Binding JogarCommand}" CommandParameter="5" IsEnabled="{Binding TabuleiroAtivo}" />
 
-                        <Button Grid.Row="2" Grid.Column="0" Style="{StaticResource BotaoCasa}" Text="{Binding Casas[6]}" Command="{Binding JogarCommand}" CommandParameter="6" IsEnabled="{Binding TabuleiroAtivo}" />
-                        <Button Grid.Row="2" Grid.Column="1" Style="{StaticResource BotaoCasa}" Text="{Binding Casas[7]}" Command="{Binding JogarCommand}" CommandParameter="7" IsEnabled="{Binding TabuleiroAtivo}" />
-                        <Button Grid.Row="2" Grid.Column="2" Style="{StaticResource BotaoCasa}" Text="{Binding Casas[8]}" Command="{Binding JogarCommand}" CommandParameter="8" IsEnabled="{Binding TabuleiroAtivo}" />
+                        <Button Grid.Row="2" Grid.Column="0" Style="{StaticResource BotaoCasa}" Text="{Binding Casa6}" Command="{Binding JogarCommand}" CommandParameter="6" IsEnabled="{Binding TabuleiroAtivo}" />
+                        <Button Grid.Row="2" Grid.Column="1" Style="{StaticResource BotaoCasa}" Text="{Binding Casa7}" Command="{Binding JogarCommand}" CommandParameter="7" IsEnabled="{Binding TabuleiroAtivo}" />
+                        <Button Grid.Row="2" Grid.Column="2" Style="{StaticResource BotaoCasa}" Text="{Binding Casa8}" Command="{Binding JogarCommand}" CommandParameter="8" IsEnabled="{Binding TabuleiroAtivo}" />
                     </Grid>
 
                     <Grid ColumnDefinitions="*,*" ColumnSpacing="10">

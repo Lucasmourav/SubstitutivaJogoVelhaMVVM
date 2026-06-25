@@ -1,68 +1,72 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    x:Class="SubstitutivaJogoVelhaMVVM.Views.HistoricoPage"
-    Title="Histórico de Partidas"
-    BackgroundColor="#101820">
+<ContentPage x:Class="SubstitutivaJogoVelhaMVVM.Views.HistoricoPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="Historico de Partidas">
 
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="15">
+        <VerticalStackLayout Padding="20" Spacing="14">
+            <Label Text="Historico de Partidas" Style="{StaticResource Titulo}" />
+            <Label Text="Consulte partidas salvas por jogador e periodo." Style="{StaticResource Subtitulo}" />
 
-            <Label
-                Text="Histórico de Partidas"
-                FontSize="28"
-                FontAttributes="Bold"
-                TextColor="White" />
+            <Frame>
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Jogador" FontAttributes="Bold" />
+                    <Entry Placeholder="Digite o nome do jogador"
+                           Text="{Binding NomeJogadorFiltro}" />
 
-            <Label
-                Text="Filtrar por jogador"
-                TextColor="White" />
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                        <VerticalStackLayout Grid.Column="0" Spacing="4">
+                            <Label Text="Data inicial" FontAttributes="Bold" />
+                            <DatePicker Date="{Binding DataInicio}" />
+                        </VerticalStackLayout>
 
-            <Entry
-                Placeholder="Digite o nome do jogador"
-                Text="{Binding FiltroNome}"
-                TextColor="White"
-                PlaceholderColor="#AAAAAA" />
+                        <VerticalStackLayout Grid.Column="1" Spacing="4">
+                            <Label Text="Data final" FontAttributes="Bold" />
+                            <DatePicker Date="{Binding DataFim}" />
+                        </VerticalStackLayout>
+                    </Grid>
 
-            <Button
-                Text="Buscar"
-                Command="{Binding BuscarCommand}" />
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                        <Button Grid.Column="0"
+                                Text="Buscar"
+                                Command="{Binding BuscarCommand}" />
+                        <Button Grid.Column="1"
+                                Text="Limpar"
+                                Style="{StaticResource BotaoSecundario}"
+                                Command="{Binding LimparCommand}" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
 
-            <CollectionView ItemsSource="{Binding Partidas}">
+            <Label Text="{Binding MensagemResultado}"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource Primary}" />
+
+            <CollectionView ItemsSource="{Binding Partidas}"
+                            EmptyView="Nenhuma partida encontrada.">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame
-                            Margin="0,5"
-                            Padding="12"
-                            BackgroundColor="#1E2A38"
-                            CornerRadius="12">
-
-                            <VerticalStackLayout Spacing="4">
-                                <Label
-                                    Text="{Binding NomeJogadorO}"
-                                    TextColor="White"
-                                    FontAttributes="Bold" />
-
-                                <Label
-                                    Text="{Binding NomeJogadorX}"
-                                    TextColor="White" />
-
-                                <Label
-                                    Text="{Binding Vencedor}"
-                                    TextColor="#FFD166" />
-
-                                <Label
-                                    Text="{Binding QuantidadeJogadas}"
-                                    TextColor="#CCCCCC" />
+                        <Frame>
+                            <VerticalStackLayout Spacing="6">
+                                <Label Text="{Binding DataPartida, StringFormat='Data: {0:dd/MM/yyyy HH:mm}'}"
+                                       FontAttributes="Bold" />
+                                <Label Text="{Binding JogadorX, StringFormat='Jogador X: {0}'}" />
+                                <Label Text="{Binding JogadorBolinha, StringFormat='Jogador O: {0}'}" />
+                                <Label Text="{Binding Vencedor, StringFormat='Vencedor: {0}'}"
+                                       TextColor="{StaticResource Success}"
+                                       FontAttributes="Bold" />
+                                <Label Text="{Binding SimboloVencedor, StringFormat='Simbolo vencedor: {0}'}" />
+                                <Label Text="{Binding QuantidadeJogadas, StringFormat='Jogadas: {0}'}" />
                             </VerticalStackLayout>
-
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
+            <Button Text="Voltar"
+                    Style="{StaticResource BotaoSecundario}"
+                    Command="{Binding VoltarCommand}" />
         </VerticalStackLayout>
     </ScrollView>
-
 </ContentPage>
