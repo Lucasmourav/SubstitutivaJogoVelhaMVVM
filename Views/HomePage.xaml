@@ -5,32 +5,49 @@
              Title="Início">
 
     <ScrollView>
-        <VerticalStackLayout Padding="24" Spacing="18">
-            <Frame BackgroundColor="{StaticResource Primary}" Padding="22" CornerRadius="24">
-                <VerticalStackLayout Spacing="8">
-                    <Label Text="Avaliação SUB" TextColor="White" FontSize="16" />
-                    <Label Text="Jogo da Velha MVVM" TextColor="White" FontSize="30" FontAttributes="Bold" />
-                    <Label Text="Shell + Rotas + Grid + SQLite" TextColor="#DCE7FF" FontSize="15" />
+        <VerticalStackLayout Padding="28" Spacing="22">
+            <!-- Bloco inicial: apresenta a identidade do app sem misturar regra de negócio na View. -->
+            <Frame BackgroundColor="{StaticResource PrimarySoft}"
+                   BorderColor="{StaticResource Primary}"
+                   Padding="24"
+                   CornerRadius="12">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Avaliação SUB"
+                           TextColor="{StaticResource PrimaryDark}"
+                           FontSize="15"
+                           FontAttributes="Bold" />
+                    <Label Text="Jogo da Velha MVVM"
+                           TextColor="{StaticResource TextPrimary}"
+                           FontSize="30"
+                           FontAttributes="Bold" />
+                    <Label Text="Partidas locais com navegação Shell, tabuleiro em Grid e histórico salvo em SQLite."
+                           TextColor="{StaticResource TextSecondary}"
+                           FontSize="16" />
                 </VerticalStackLayout>
             </Frame>
 
+            <!-- Card explicativo para deixar claro como o projeto foi organizado. -->
             <Frame>
-                <VerticalStackLayout Spacing="12">
-                    <Label Text="O que este app atende" Style="{StaticResource Titulo}" FontSize="22" />
-                    <Label Text="1. Arquitetura MVVM com Models, Services, ViewModels e Views." />
-                    <Label Text="2. Navegação Shell por rotas: home, jogo e historico." />
-                    <Label Text="3. Tela do jogo usando Grid 3x3, com jogadores O e X." />
-                    <Label Text="4. Registro das partidas no SQLite." />
-                    <Label Text="5. Consulta por nome do jogador e período." />
+                <VerticalStackLayout Spacing="14">
+                    <Label Text="Fluxo do app" Style="{StaticResource Titulo}" FontSize="22" />
+                    <Label Text="1. Informe os jogadores e inicie uma partida." />
+                    <Label Text="2. Jogue no tabuleiro 3x3 até vitória ou empate." />
+                    <Label Text="3. Consulte o histórico por nome e período." />
                 </VerticalStackLayout>
             </Frame>
 
-            <Button Text="Nova partida"
-                    Command="{Binding AbrirJogoCommand}" />
+            <Grid ColumnDefinitions="*,*"
+                  ColumnSpacing="14"
+                  Margin="0,4,0,0">
+                <Button Grid.Column="0"
+                        Text="Nova partida"
+                        Command="{Binding AbrirJogoCommand}" />
 
-            <Button Text="Consultar histórico"
-                    Style="{StaticResource BotaoSecundario}"
-                    Command="{Binding AbrirHistoricoCommand}" />
+                <Button Grid.Column="1"
+                        Text="Histórico"
+                        Style="{StaticResource BotaoSecundario}"
+                        Command="{Binding AbrirHistoricoCommand}" />
+            </Grid>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

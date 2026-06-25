@@ -26,6 +26,7 @@ public class DatabaseService
         if (_inicializado)
             return;
 
+        // Protege a primeira inicialização caso jogo e histórico chamem o banco ao mesmo tempo.
         await _inicializacaoLock.WaitAsync();
         try
         {

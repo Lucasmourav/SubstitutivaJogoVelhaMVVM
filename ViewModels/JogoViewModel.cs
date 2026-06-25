@@ -7,6 +7,9 @@ namespace SubstitutivaJogoVelhaMVVM.ViewModels;
 public class JogoViewModel : BaseViewModel
 {
     private readonly DatabaseService _database;
+
+    // O tabuleiro fica na ViewModel porque ele faz parte do estado e da regra do jogo.
+    // Cada posição é exposta por uma propriedade Casa0..Casa8 para o binding atualizar a tela.
     private readonly string[] _casas = new string[9];
 
     private string _nomeJogadorBolinha = string.Empty;
@@ -79,6 +82,7 @@ public class JogoViewModel : BaseViewModel
 
     public bool TabuleiroAtivo => PartidaIniciada && !PartidaEncerrada;
 
+    // Commands são a ponte entre os botões da View e as ações da ViewModel.
     public ICommand IniciarPartidaCommand { get; }
     public ICommand JogarCommand { get; }
     public ICommand NovaPartidaCommand { get; }
@@ -96,6 +100,7 @@ public class JogoViewModel : BaseViewModel
 
     private void IniciarPartida()
     {
+        // Validações de entrada ficam aqui, mantendo a View apenas com bindings.
         if (string.IsNullOrWhiteSpace(NomeJogadorBolinha) || string.IsNullOrWhiteSpace(NomeJogadorX))
         {
             Mensagem = "Preencha o nome dos dois jogadores antes de iniciar.";
@@ -133,6 +138,8 @@ public class JogoViewModel : BaseViewModel
         if (!TabuleiroAtivo)
             return;
 
+        // O CommandParameter vem do XAML como string em algumas plataformas.
+        // Por isso a posição é validada antes de acessar o array do tabuleiro.
         if (!TryObterPosicao(parametro, out int posicao))
         {
             Mensagem = "Jogada inválida.";
@@ -180,6 +187,8 @@ public class JogoViewModel : BaseViewModel
     private void DefinirCasa(int posicao, string simbolo)
     {
         _casas[posicao] = simbolo;
+
+        // Avisa apenas a casa alterada, fazendo o botão correspondente exibir X ou O.
         OnPropertyChanged($"Casa{posicao}");
     }
 
@@ -211,6 +220,7 @@ public class JogoViewModel : BaseViewModel
         PartidaEncerrada = true;
         OnPropertyChanged(nameof(TabuleiroAtivo));
 
+        // Mapeia o estado final do jogo para o Model que será salvo no SQLite.
         var partida = new Partida
         {
             JogadorBolinha = NomeJogadorBolinha.Trim(),
