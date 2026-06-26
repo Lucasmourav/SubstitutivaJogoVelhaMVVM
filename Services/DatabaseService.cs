@@ -9,6 +9,7 @@ namespace SubstitutivaJogoVelhaMVVM.Services;
 public class DatabaseService
 {
     private readonly SQLiteAsyncConnection _database;
+    private readonly SemaphoreSlim _inicializacaoLock = new(1, 1);
     private bool _inicializado;
 
     public DatabaseService(string dbPath)
@@ -25,9 +26,21 @@ public class DatabaseService
         if (_inicializado)
             return;
 
-        // Cria a tabela Partida caso ela ainda não exista.
-        await _database.CreateTableAsync<Partida>();
-        _inicializado = true;
+        // Protege a primeira inicialização caso jogo e histórico chamem o banco ao mesmo tempo.
+        await _inicializacaoLock.WaitAsync();
+        try
+        {
+            if (_inicializado)
+                return;
+
+            // Cria a tabela Partida caso ela ainda não exista.
+            await _database.CreateTableAsync<Partida>();
+            _inicializado = true;
+        }
+        finally
+        {
+            _inicializacaoLock.Release();
+        }
     }
 
     public async Task<int> SalvarPartidaAsync(Partida partida)

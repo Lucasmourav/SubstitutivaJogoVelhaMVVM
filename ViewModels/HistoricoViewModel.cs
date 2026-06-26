@@ -8,11 +8,14 @@ namespace SubstitutivaJogoVelhaMVVM.ViewModels;
 public class HistoricoViewModel : BaseViewModel
 {
     private readonly DatabaseService _database;
+
+    // Valores iniciais dos filtros: mostra o último mês quando a tela abre.
     private DateTime _dataInicio = DateTime.Today.AddDays(-30);
     private DateTime _dataFim = DateTime.Today;
     private string _nomeJogadorFiltro = string.Empty;
     private string _mensagemResultado = "Use os filtros e toque em Buscar.";
 
+    // ObservableCollection notifica a CollectionView quando itens entram ou saem da lista.
     public ObservableCollection<Partida> Partidas { get; } = new();
 
     public DateTime DataInicio
@@ -53,6 +56,7 @@ public class HistoricoViewModel : BaseViewModel
 
     public async Task BuscarAsync()
     {
+        // A ViewModel valida o intervalo antes de consultar o banco.
         if (DataFim.Date < DataInicio.Date)
         {
             MensagemResultado = "A data final não pode ser menor que a data inicial.";
@@ -61,6 +65,7 @@ public class HistoricoViewModel : BaseViewModel
 
         var resultado = await _database.FiltrarPartidasAsync(DataInicio, DataFim, NomeJogadorFiltro);
 
+        // Atualiza a mesma coleção para a CollectionView refletir os resultados na tela.
         Partidas.Clear();
         foreach (var partida in resultado)
             Partidas.Add(partida);

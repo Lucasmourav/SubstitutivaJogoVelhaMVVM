@@ -1,4 +1,3 @@
-using System.Collections.ObjectModel;
 using System.Windows.Input;
 using SubstitutivaJogoVelhaMVVM.Models;
 using SubstitutivaJogoVelhaMVVM.Services;
@@ -9,6 +8,10 @@ public class JogoViewModel : BaseViewModel
 {
     private readonly DatabaseService _database;
 
+    // O tabuleiro fica na ViewModel porque ele faz parte do estado e da regra do jogo.
+    // Cada posição é exposta por uma propriedade Casa0..Casa8 para o binding atualizar a tela.
+    private readonly string[] _casas = new string[9];
+
     private string _nomeJogadorBolinha = string.Empty;
     private string _nomeJogadorX = string.Empty;
     private string _jogadorAtual = "X";
@@ -17,7 +20,15 @@ public class JogoViewModel : BaseViewModel
     private bool _partidaIniciada;
     private bool _partidaEncerrada;
 
-    public ObservableCollection<string> Casas { get; } = new();
+    public string Casa0 => _casas[0];
+    public string Casa1 => _casas[1];
+    public string Casa2 => _casas[2];
+    public string Casa3 => _casas[3];
+    public string Casa4 => _casas[4];
+    public string Casa5 => _casas[5];
+    public string Casa6 => _casas[6];
+    public string Casa7 => _casas[7];
+    public string Casa8 => _casas[8];
 
     public string NomeJogadorBolinha
     {
@@ -71,6 +82,7 @@ public class JogoViewModel : BaseViewModel
 
     public bool TabuleiroAtivo => PartidaIniciada && !PartidaEncerrada;
 
+    // Commands são a ponte entre os botões da View e as ações da ViewModel.
     public ICommand IniciarPartidaCommand { get; }
     public ICommand JogarCommand { get; }
     public ICommand NovaPartidaCommand { get; }
@@ -80,9 +92,6 @@ public class JogoViewModel : BaseViewModel
     {
         _database = database;
 
-        for (int i = 0; i < 9; i++)
-            Casas.Add(string.Empty);
-
         IniciarPartidaCommand = new Command(IniciarPartida);
         JogarCommand = new Command(async parametro => await JogarAsync(parametro));
         NovaPartidaCommand = new Command(LimparTabuleiro);
@@ -91,6 +100,7 @@ public class JogoViewModel : BaseViewModel
 
     private void IniciarPartida()
     {
+        // Validações de entrada ficam aqui, mantendo a View apenas com bindings.
         if (string.IsNullOrWhiteSpace(NomeJogadorBolinha) || string.IsNullOrWhiteSpace(NomeJogadorX))
         {
             Mensagem = "Preencha o nome dos dois jogadores antes de iniciar.";
@@ -112,8 +122,8 @@ public class JogoViewModel : BaseViewModel
 
     private void LimparTabuleiro()
     {
-        for (int i = 0; i < Casas.Count; i++)
-            Casas[i] = string.Empty;
+        for (int i = 0; i < _casas.Length; i++)
+            DefinirCasa(i, string.Empty);
 
         QuantidadeJogadas = 0;
         JogadorAtual = "X";
@@ -128,16 +138,19 @@ public class JogoViewModel : BaseViewModel
         if (!TabuleiroAtivo)
             return;
 
-        if (parametro is null)
+        // O CommandParameter vem do XAML como string em algumas plataformas.
+        // Por isso a posição é validada antes de acessar o array do tabuleiro.
+        if (!TryObterPosicao(parametro, out int posicao))
+        {
+            Mensagem = "Jogada inválida.";
             return;
-
-        int posicao = Convert.ToInt32(parametro);
+        }
 
         // Não permite jogar em casa já ocupada.
-        if (!string.IsNullOrWhiteSpace(Casas[posicao]))
+        if (!string.IsNullOrWhiteSpace(_casas[posicao]))
             return;
 
-        Casas[posicao] = JogadorAtual;
+        DefinirCasa(posicao, JogadorAtual);
         QuantidadeJogadas++;
 
         if (VerificarVitoria(JogadorAtual))
@@ -159,6 +172,26 @@ public class JogoViewModel : BaseViewModel
         Mensagem = $"Vez de {nomeDaVez} ({JogadorAtual}). Jogadas: {QuantidadeJogadas}.";
     }
 
+    private bool TryObterPosicao(object? parametro, out int posicao)
+    {
+        posicao = parametro switch
+        {
+            int valor => valor,
+            string texto when int.TryParse(texto, out var valor) => valor,
+            _ => -1
+        };
+
+        return posicao >= 0 && posicao < _casas.Length;
+    }
+
+    private void DefinirCasa(int posicao, string simbolo)
+    {
+        _casas[posicao] = simbolo;
+
+        // Avisa apenas a casa alterada, fazendo o botão correspondente exibir X ou O.
+        OnPropertyChanged($"Casa{posicao}");
+    }
+
     private bool VerificarVitoria(string simbolo)
     {
         // Todas as combinações possíveis de vitória: linhas, colunas e diagonais.
@@ -175,7 +208,7 @@ public class JogoViewModel : BaseViewModel
             int b = combinacoes[i, 1];
             int c = combinacoes[i, 2];
 
-            if (Casas[a] == simbolo && Casas[b] == simbolo && Casas[c] == simbolo)
+            if (_casas[a] == simbolo && _casas[b] == simbolo && _casas[c] == simbolo)
                 return true;
         }
 
@@ -187,6 +220,7 @@ public class JogoViewModel : BaseViewModel
         PartidaEncerrada = true;
         OnPropertyChanged(nameof(TabuleiroAtivo));
 
+        // Mapeia o estado final do jogo para o Model que será salvo no SQLite.
         var partida = new Partida
         {
             JogadorBolinha = NomeJogadorBolinha.Trim(),

@@ -9,7 +9,7 @@
        Shell.TitleColor="White"
        Shell.TabBarBackgroundColor="{StaticResource Primary}"
        Shell.TabBarTitleColor="White"
-       Shell.TabBarUnselectedColor="#BFD7FF">
+       Shell.TabBarUnselectedColor="#BFDBFE">
 
     <!-- ShellContent cria a primeira rota visível do app. -->
     <ShellContent Title="Início"
